@@ -19,17 +19,31 @@ A modern, web-based Grade Weighted Average (GWA) calculator system for students 
 ### Quick Start
 
 1. **Open the application**: Simply open `index.html` in your web browser
-2. **For PDF downloads**: Use a local server (see [Server Setup Guide](SERVER_SETUP.md))
+2. **For PDF downloads**: Use a local server (recommended)
 
 ### Using a Local Server (Recommended for PDF Downloads)
 
-The application works best when served through a local server. See [SERVER_SETUP.md](SERVER_SETUP.md) for detailed instructions.
+The application works best when served through a local server, especially for PDF downloads. Here are quick setup options:
 
-**Quick setup with Python:**
+**Option 1: Python (if installed)**
 ```bash
 python -m http.server 8000
 ```
 Then open: `http://localhost:8000`
+
+**Option 2: Node.js (if installed)**
+```bash
+npx http-server -p 8000
+```
+Then open: `http://localhost:8000`
+
+**Option 3: PHP (if installed)**
+```bash
+php -S localhost:8000
+```
+Then open: `http://localhost:8000`
+
+**Note**: If you don't have any of these installed, you can still use the calculator by opening `index.html` directly in your browser, but PDF downloads may not work due to browser security restrictions.
 
 ## Features in Detail
 
