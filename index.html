@@ -1,0 +1,152 @@
+<!--
+Copyright (c) 2026 Brian Kyle L. Salor
+Email: briankylesalor02@gmail.com
+
+This project is licensed under the MIT License.
+See LICENSE file for details.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Cumulative GWA Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="title">
+                        <span class="title-main">Cumulative GWA</span>
+                        <span class="title-sub">Calculator System</span>
+                    </h1>
+                    <p class="subtitle">Track your academic progress across all semesters</p>
+                </div>
+                <div class="header-right">
+                    <button id="clearDataBtn" class="btn-clear-data" title="Clear all data and start fresh">
+                        <span>🔄</span>
+                        <span>Clear Data</span>
+                    </button>
+                    <button id="generatePDFBtn" class="btn-generate-pdf-header">
+                        <span>📄</span>
+                        <span>Generate PDF Report</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="summary-card" id="summaryCard">
+                <div class="summary-content">
+                    <div class="summary-item">
+                        <span class="summary-label">Cumulative GWA</span>
+                        <span class="summary-value" id="cumulativeGWA">0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Total Units</span>
+                        <span class="summary-value" id="totalUnits">0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Active Semesters</span>
+                        <span class="summary-value" id="activeSemesters">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-card">
+                <div class="filter-header">
+                    <span class="filter-label">Calculate GWA Range</span>
+                    <span class="filter-info">Select the range of semesters to include in cumulative GWA</span>
+                </div>
+                <div class="filter-controls">
+                    <select id="gwaRangeFilter" class="range-select">
+                        <!-- Options will be dynamically generated -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="disclaimer-card">
+                <div class="disclaimer-icon">ℹ️</div>
+                <div class="disclaimer-content">
+                    <p class="disclaimer-title">Important Information</p>
+                    <ul class="disclaimer-list">
+                        <li><strong>Subject names are optional</strong> but highly recommended for PDF reports to make them more complete and professional.</li>
+                        <li><strong>No database storage:</strong> This system does not save your data to any server or database. All data is stored locally in your browser only.</li>
+                        <li><strong>Privacy guaranteed:</strong> Your grades and academic information never leave your device. We have no access to your data.</li>
+                        <li><strong>Instant generation:</strong> PDF reports are generated immediately on your device - no data transmission required.</li>
+                    </ul>
+                    <p class="disclaimer-note">By using this calculator, you acknowledge that you are entering your own academic data for personal tracking purposes.</p>
+                </div>
+            </div>
+
+            <div class="report-card">
+                <div class="report-header">
+                    <span class="report-label">Student Information</span>
+                    <span class="report-info">Enter your details for a complete PDF report</span>
+                </div>
+                
+                <div class="report-controls">
+                    <div class="form-row">
+                        <div class="student-input-group">
+                            <label for="studentName" class="student-label">Student Name <span class="required">*</span></label>
+                            <input type="text" id="studentName" class="student-input" placeholder="Enter your full name" required>
+                            <span class="input-hint">Required for PDF report generation</span>
+                        </div>
+                        <div class="school-input-group">
+                            <label for="schoolName" class="school-label">School Name (Optional)</label>
+                            <input type="text" id="schoolName" class="school-input" placeholder="Enter your school name">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="years-container" id="yearsContainer">
+                <!-- Years will be dynamically generated -->
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-text">
+                    <span class="footer-label">Developed by</span>
+                    <span class="footer-name">Brian Kyle L. Salor</span>
+                </p>
+                <p class="footer-text">
+                    <a href="mailto:briankylesalor02@gmail.com" class="footer-link">
+                        <span>📧</span>
+                        <span>briankylesalor02@gmail.com</span>
+                    </a>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Confirm Action</h3>
+                <button class="modal-close" id="modalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-message" id="modalMessage">Are you sure?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" id="modalCancel">Cancel</button>
+                <button class="modal-btn modal-btn-primary" id="modalConfirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
